@@ -11,7 +11,7 @@ function Chat(props) {
 
   let url =
     process.env.REACT_APP_NODE_ENV === "production"
-      ? "https://beass3nodejs.onrender.com"
+      ? `${process.env.REACT_APP_URL_BE}`
       : "http://localhost:5000";
 
   let socket = isLogin ? io(url, { transports: ["websocket"] }) : "";
