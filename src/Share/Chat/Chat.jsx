@@ -27,44 +27,50 @@ function Chat(props) {
 
   const bottomRef = useRef(null);
 
+  // kéo đến tin nhắn mới nhất
   const scrollToBottom = () => {
     if (bottomRef.current) {
       bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
     }
   };
 
+  // Hàm này dùng để mở hộp thoại chat
+  const onChat = () => {
+    setActiveChat(!activeChat);
+  };
+
+  // khi message thay đổi thì sẽ scrollToBottom
   useEffect(() => {
     if (activeChat) {
       scrollToBottom();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [message]);
 
+  // khi mở hộp thoại tin nhắn thì scrollToBottom
   useEffect(() => {
     if (activeChat) {
       scrollToBottom();
     }
   }, [activeChat]);
 
-  // Hàm này dùng để mở hộp thoại chat
-  const onChat = () => {
-    setActiveChat(!activeChat);
-  };
-
+  // set tin nhắn để gửi
   const onChangeText = (e) => {
     setTextMessage(e.target.value);
   };
 
   // 1 lần mỗi khi truy cập vào trang web
   useEffect(() => {
+    setLoad(true);
     // nếu có roomId thì sẽ kết nối tới socket Io
     if (roomId) {
       // console.log("nếu có roomId thì sẽ kết nối tới socket Io");
       socket.emit("join", roomId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId]);
 
+  // khi nhấn gửi tin nhắn
   const handlerSend = async () => {
     //Sau đó nó emit dữ liệu lên server bằng socket với key send_message và value data
 
@@ -91,10 +97,12 @@ function Chat(props) {
     }
   };
 
+  // hàm lấy tất cả message theo id room
   const fetchData = async () => {
     if (roomId) {
       const response = await ChatRoomsAPI.getMessageByRoomId(roomId);
       setMessage(response.sessionData || []);
+      setLoad(false);
     }
   };
 
@@ -104,23 +112,16 @@ function Chat(props) {
       fetchData();
       setLoad(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [load]);
 
-  useEffect(() => {
-    setLoad(true);
-  }, [roomId]);
-
   //Hàm này dùng để nhận socket từ server gửi lên
-  useEffect(() => {
-    //Nhận dữ liệu từ server gửi lên thông qua socket với key receive_message
-    isLogin &&
-      socket.on("receive_message", (data) => {
-        //Sau đó nó sẽ setLoad gọi lại hàm useEffect lấy lại dữ liệu
-        setLoad(true);
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  isLogin &&
+    socket.on("receive_message", (data) => {
+      console.log("nhận tin từ admin");
+      console.log("data:", data);
+      setLoad(true);
+    });
 
   return (
     <div className="wrapper_chat">
@@ -162,9 +163,7 @@ function Chat(props) {
                 <h4 className="card-title">
                   <strong>Customer Support</strong>
                 </h4>{" "}
-                <p className="btn btn-xs btn-secondary">
-                  Let's Chat App
-                </p>
+                <p className="btn btn-xs btn-secondary">Let's Chat App</p>
               </div>
               <div
                 className="ps-container ps-theme-default ps-active-y fix_scoll"

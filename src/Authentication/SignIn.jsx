@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import UserAPI from "../API/UserAPI";
 import { addUser, deleteAllCart } from "../Redux/Action/ActionCart";
+import { addSession } from "../Redux/Action/ActionSession";
 
 import "./Auth.css";
 import queryString from "query-string";
@@ -61,11 +62,8 @@ function SignIn(props) {
           const response = await UserAPI.postSignIn(query);
 
           if (response.error) {
-            console.log("response:", response);
-
             setErrorMessage(response.message);
           } else {
-            console.log("response:", response);
             localStorage.setItem("id_user", response.user._id);
 
             localStorage.setItem("isAdmin", response.user.isAdmin);
@@ -75,8 +73,10 @@ function SignIn(props) {
             localStorage.setItem("njs_asm3_roomId", response.user.roomId);
 
             const actionAddUser = addUser(response.user._id);
-            // dispatch(actionAddSession);
+            const actionAddSession = addSession(response.user);
+
             dispatch(actionAddUser);
+            dispatch(actionAddSession);
             setCheckPush(true);
           }
         };

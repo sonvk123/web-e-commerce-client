@@ -11,7 +11,7 @@ const ReducerSession = (state = initialState, action) => {
       return {
         ...state,
         idUser: action.data.idUser,
-        isAdmin: "",
+        isAdmin: action.data.isAdmin,
         isLogin: true,
         njs_asm3_roomId: action.data.roomId,
       };
@@ -19,10 +19,10 @@ const ReducerSession = (state = initialState, action) => {
     case "DELETE_SESSION":
       return {
         ...state,
-        idUser: action.data.idUser,
+        idUser: "",
         isAdmin: "",
         isLogin: false,
-        njs_asm3_roomId: action.data.roomId,
+        njs_asm3_roomId: "",
       };
 
     default:
