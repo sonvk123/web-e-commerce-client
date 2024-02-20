@@ -184,7 +184,6 @@ function Detail(props) {
                   <div className="carousel-item active">
                     <img
                       className="d-block w-100"
-                      Images
                       src={detail.img1}
                       alt="First slide"
                     />
