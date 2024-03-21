@@ -22,12 +22,7 @@ function ListCart(props) {
   const { listCart, onDeleteCart, onUpdateCount } = props;
   const dispatch = useDispatch();
 
-  const handlerChangeText = (e) => {
-    // console.log(e.target.value);
-  };
-
   const handlerDelete = (getProduct) => {
-    // console.log("listCart:", listCart);
     if (!onDeleteCart) {
       return;
     }
@@ -157,7 +152,6 @@ function ListCart(props) {
                       className="form-control form-control-sm border-0 shadow-0 p-0"
                       type="text"
                       value={value.quantity}
-                      onChange={handlerChangeText}
                     />
                     <button
                       className="inc-btn p-0"

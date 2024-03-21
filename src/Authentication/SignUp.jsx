@@ -98,8 +98,6 @@ function SignUp(props) {
               setPhoneError(true);
               setPasswordError(false);
             } else {
-              // console.log("Thanh Cong");
-
               const fetchSignUp = async () => {
                 setIsLoading(true);
                 const params = {
@@ -123,7 +121,6 @@ function SignUp(props) {
               };
 
               fetchSignUp();
-
             }
           }
         }
@@ -140,8 +137,6 @@ function SignUp(props) {
     const isValid = password.length >= 8;
     return isValid;
   }
-  // console.log("error:", error);
-  // console.log("dataError:", dataError);
   return (
     <div className="limiter">
       <div className="container-login100">

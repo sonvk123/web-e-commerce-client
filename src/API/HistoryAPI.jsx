@@ -8,7 +8,6 @@ const HistoryAPI = {
 
   getDetail: (id) => {
     const url = `/histories/historie/${id}`;
-    console.log("url:", url);
     return axiosClient.get(url);
   },
 };

@@ -12,7 +12,6 @@ import CartAPI from "../API/CartAPI";
 function SignIn(props) {
   //listCart được lấy từ redux
   const listCart = useSelector((state) => state.Cart.listCart);
-  // console.log("listCart:", listCart);
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
@@ -92,12 +91,7 @@ function SignIn(props) {
       //Lần đầu sẽ không thực hiện insert được vì addCart = ''
       if (checkPush === true) {
         if (!listCart && listCart.length === 0) {
-          // console.log("không có list Cart nên không thêm được");
         } else {
-          // console.log("listCart:", listCart);
-
-          // console.log("có list Cart thêm được");
-
           const addToCartAsync = async (value) => {
             const params = {
               idUser: localStorage.getItem("id_user"),
@@ -118,7 +112,6 @@ function SignIn(props) {
           const ActionDeleteAllCart = deleteAllCart([]);
           dispatch(ActionDeleteAllCart);
           setRedirect(true);
-          // console.log("xong chuyển thôi ");
           addToCartBulkAsync();
         }
       }

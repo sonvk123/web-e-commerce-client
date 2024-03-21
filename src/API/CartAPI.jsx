@@ -4,14 +4,12 @@ const CartAPI = {
   // lấy cart
   getCarts: (query) => {
     const url = `/carts${query}`;
-    console.log(url)
     return axiosClient.get(url);
   },
 
   // thêm cart
   postAddToCart: (query) => {
     const url = `/carts/add${query}`;
-    console.log("postAddToCart", url);
     return axiosClient.post(url);
   },
 
