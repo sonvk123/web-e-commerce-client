@@ -18,6 +18,10 @@ function Chat(props) {
 
   const [activeChat, setActiveChat] = useState(false);
   const [textMessage, setTextMessage] = useState("");
+
+  const [isErrorTextMessage, isErrorTetTextMessage] = useState(false);
+  const [errorTextMessage, errorTetTextMessage] = useState("");
+
   const [message, setMessage] = useState();
 
   const roomId = useSelector((state) => state.Session.njs_asm3_roomId);
@@ -56,6 +60,8 @@ function Chat(props) {
 
   // set tin nhắn để gửi
   const onChangeText = (e) => {
+    isErrorTetTextMessage(false);
+    errorTetTextMessage("");
     setTextMessage(e.target.value);
   };
 
@@ -82,7 +88,11 @@ function Chat(props) {
         roomId: roomId,
         sender: false,
       };
-
+      if (!textMessage.trim()) {
+        isErrorTetTextMessage(true);
+        errorTetTextMessage("phần này không được để trống");
+        return;
+      }
       const postData = async () => {
         await ChatRoomsAPI.addMessage(data);
       };
@@ -115,11 +125,11 @@ function Chat(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [load]);
 
-  //Hàm này dùng để nhận socket từ server gửi lên
+  //nhận socket từ server gửi lên
   isLogin &&
     socket.on("receive_message", (data) => {
-      console.log("nhận tin từ admin");
       console.log("data:", data);
+
       setLoad(true);
     });
 
@@ -203,7 +213,10 @@ function Chat(props) {
                 />
                 <input
                   type="text"
-                  placeholder="Enter Message!"
+                  className={`${isErrorTextMessage ? "error-placeholder" : ""}`}
+                  placeholder={
+                    isErrorTextMessage ? errorTextMessage : "Enter Message!"
+                  }
                   onChange={onChangeText}
                   value={textMessage}
                   style={{ width: "80%" }}

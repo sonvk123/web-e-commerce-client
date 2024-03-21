@@ -18,6 +18,10 @@
 	z-index: 99999;
 }
 
+.error-placeholder::placeholder {
+  color: red;
+}
+
 @media only screen and (max-width: 1300px) {
 	.active_chat {
 		left: 58%;
