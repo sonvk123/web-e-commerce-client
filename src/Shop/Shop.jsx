@@ -6,7 +6,7 @@ import Pagination from "./Component/Pagination";
 import Products from "./Component/Products";
 import SortProduct from "./Component/SortProduct";
 
-function Shop(props) {
+function Shop() {
   const [products, setProducts] = useState([]);
 
   //state dùng để sắp xếp sản phẩm
@@ -29,16 +29,12 @@ function Shop(props) {
 
   //Hàm này dùng để lấy value từ component SortProduct truyền lên
   const handlerChangeSort = (value) => {
-    // console.log("Value: ", value);
-
     setSort(value);
   };
 
   //Hàm này dùng để thay đổi state pagination.page
   //Nó sẽ truyền xuống Component con và nhận dữ liệu từ Component con truyền lên
   const handlerChangePage = (value) => {
-    // console.log("Value: ", value);
-
     //Sau đó set lại cái pagination để gọi chạy làm useEffect gọi lại API pagination
     setPagination({
       page: value,
@@ -51,8 +47,6 @@ function Shop(props) {
   //Hàm này dùng để thay đổi state pagination.search
   //Hàm này sẽ truyền xuống Component con và nhận dữ liệu từ Component con truyền lên
   const handlerSearch = (value) => {
-    // console.log("Value: ", value);
-
     setPagination({
       page: pagination.page,
       count: pagination.count,
@@ -63,10 +57,8 @@ function Shop(props) {
 
   //Hàm này dùng để thay đổi state pagination.category
   const handlerCategory = (value) => {
-    // console.log("Value: ", value);
-
     setPagination({
-      page: pagination.page,
+      page: "1",
       count: pagination.count,
       search: pagination.search,
       category: value,
@@ -88,7 +80,6 @@ function Shop(props) {
       const newQuery = "?" + query;
 
       const response = await ProductAPI.getPagination(newQuery);
-
       setTotalPage(response.totalPages);
       setProducts(response.products);
     };

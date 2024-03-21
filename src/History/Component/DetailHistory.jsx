@@ -24,9 +24,9 @@ function DetailHistory(props) {
     };
 
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log("information:", information);
   return (
     <div className="container">
       <section className="py-5 bg-light">
@@ -89,7 +89,7 @@ function DetailHistory(props) {
                     <div className="media align-items-center justify-content-center">
                       <Link
                         className="reset-anchor d-block animsition-link"
-                        to={`/detail/${value.idProduct}`}
+                        to={`/detail/${value.productId}`}
                       >
                         <img src={value.img} alt="..." width="200" />
                       </Link>

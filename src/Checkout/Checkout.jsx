@@ -5,16 +5,7 @@ import CheckoutAPI from "../API/CheckoutAPI";
 import convertMoney from "../convertMoney";
 import "./Checkout.css";
 
-import io from "socket.io-client";
-
 function Checkout(props) {
-  let url =
-    process.env.REACT_APP_NODE_ENV === "production"
-      ? "https://beass3nodejs.onrender.com/client"
-      : "http://localhost:5000/client";
-
-  const socket = io(url);
-
   const [carts, setCarts] = useState([]);
 
   const [total, setTotal] = useState(0);
@@ -124,9 +115,7 @@ function Checkout(props) {
               setPhoneError(false);
               setAddressError(true);
             } else {
-              // console.log("Thanh Cong");
-
-              setLoad(!load);
+              sendMail();
             }
           }
         }
@@ -134,39 +123,28 @@ function Checkout(props) {
     }
   };
 
-  //Hàm này bắt đầu gửi Email xác nhận đơn hàng
-  useEffect(() => {
-    if (load) {
-      const sendMail = async () => {
-        const params = {
-          to: email,
-          fullname: fullname,
-          phone: phone,
-          address: address,
-          idUser: localStorage.getItem("id_user"),
-        };
+  const sendMail = async () => {
+    setLoad(true);
+    const params = {
+      to: email,
+      fullname: fullname,
+      phone: phone,
+      address: address,
+      idUser: localStorage.getItem("id_user"),
+    };
 
-        const query = "?" + queryString.stringify(params);
+    const query = "?" + queryString.stringify(params);
 
-        await CheckoutAPI.postEmail(query);
-      };
-
-      sendMail();
-
-      const data = localStorage.getItem("id_user");
-
-      // Gửi socket lên server
-      socket.emit("send_order", data);
-
-      //Dùng setTimeout delay 3s
-      //Sau 4s nó sẽ thực hiện
-      setTimeout(() => {
-        setSuccess(!success);
-        setLoad(!load);
-      }, 4000);
+    const res = await CheckoutAPI.postEmail(query);
+    if (res.status) {
+      console.log("res:", res);
+      setLoad(false);
+      window.alert("Lỗi khi đặt hàng");
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [load]);
+    setLoad(false);
+    setSuccess(true);
+  };
 
   const onChangeName = (e) => {
     setFullname(e.target.value);
@@ -224,12 +202,12 @@ function Checkout(props) {
           </div>
         </section>
 
-        {!success && (
+        {success === false ? (
           <section className="py-5">
             <h2 className="h5 text-uppercase mb-4">Billing details</h2>
             <div className="row">
               <div className="col-lg-8">
-                <form>
+                <div>
                   <div className="row">
                     <div className="col-lg-12 form-group">
                       <label
@@ -327,7 +305,7 @@ function Checkout(props) {
                       </button>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
               <div className="col-lg-4">
                 <div className="card border-0 rounded-0 p-lg-4 bg-light">
@@ -362,9 +340,7 @@ function Checkout(props) {
               </div>
             </div>
           </section>
-        )}
-
-        {success && (
+        ) : (
           <section className="py-5">
             <div className="p-5">
               <h1>You Have Successfully Ordered!</h1>
