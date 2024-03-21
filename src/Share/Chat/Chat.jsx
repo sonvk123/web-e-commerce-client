@@ -70,7 +70,6 @@ function Chat(props) {
     setLoad(true);
     // nếu có roomId thì sẽ kết nối tới socket Io
     if (roomId) {
-      // console.log("nếu có roomId thì sẽ kết nối tới socket Io");
       socket.emit("join", roomId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,8 +127,6 @@ function Chat(props) {
   //nhận socket từ server gửi lên
   isLogin &&
     socket.on("receive_message", (data) => {
-      console.log("data:", data);
-
       setLoad(true);
     });
 

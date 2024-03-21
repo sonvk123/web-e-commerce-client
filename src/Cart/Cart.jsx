@@ -65,10 +65,7 @@ function Cart(props) {
 
         const query = "?" + queryString.stringify(params);
 
-        // console.log(query);
-
         const response = await CartAPI.getCarts(query);
-        // console.log("response:", response);
         setCart(response);
 
         getTotal(response);
@@ -82,8 +79,6 @@ function Cart(props) {
 
   //Hàm này dùng để truyền xuống cho component con xử và trả ngược dữ liệu lại component cha
   const onDeleteCart = (getUser, getProduct) => {
-    // console.log("idUser: " + getUser + ", idProduct: " + getProduct);
-
     if (localStorage.getItem("id_user")) {
       // user đã đăng nhập
 
@@ -93,7 +88,6 @@ function Cart(props) {
           userId: getUser,
           idProduct: getProduct,
         };
-        // console.log("params:", params);
         const query = "?" + queryString.stringify(params);
 
         await CartAPI.deleteToCart(query);

@@ -16,7 +16,6 @@ const ReducerCart = (state = initalState, action) => {
       return state;
 
     case "ADD_CART":
-      // console.log(action.data);
 
       //Lấy dữ liệu được truyền tới
       const data_add_cart = action.data;
@@ -41,12 +40,10 @@ const ReducerCart = (state = initalState, action) => {
         //Còn đã từng mua rồi thì mình update tại vị trí indexCart mà mình vừa tìm được
         if (!findCart) {
           add_cart.push(data_add_cart);
-          // console.log("Push");
         } else {
           add_cart[indexCart].quantity =
             parseInt(add_cart[indexCart].quantity) +
             parseInt(data_add_cart.quantity);
-          // console.log("Update");
         }
       }
 
@@ -55,7 +52,6 @@ const ReducerCart = (state = initalState, action) => {
         listCart: add_cart,
       };
 
-      // console.log(state);
 
       return state;
 
@@ -96,8 +92,6 @@ const ReducerCart = (state = initalState, action) => {
 
       const update_cart = state.listCart;
 
-      // console.log("data_update_cart:", data_update_cart);
-      // console.log("update_cart:", update_cart);
 
       const index = update_cart.findIndex((value) => {
         return value.idProduct === data_update_cart.idProduct;

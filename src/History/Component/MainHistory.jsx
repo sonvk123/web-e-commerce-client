@@ -21,8 +21,6 @@ function MainHistory(props) {
   //Hàm này dùng để thay đổi state pagination.page
   //Nó sẽ truyền xuống Component con và nhận dữ liệu từ Component con truyền lên
   const handlerChangePage = (value) => {
-    // console.log("Value: ", value);
-
     //Sau đó set lại cái pagination để gọi chạy làm useEffect gọi lại API pagination
     setPagination({
       page: value,

@@ -11,11 +11,8 @@ function DetailHistory(props) {
   const [information, setInformation] = useState({});
 
   useEffect(() => {
-    // console.log("id:", id);
-
     const fetchData = async () => {
       const response = await HistoryAPI.getDetail(id);
-      // console.log("response:", response);
       setTotal(response.cart.total);
 
       setCart(response.cart.items);
@@ -26,7 +23,6 @@ function DetailHistory(props) {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log("information:", information);
   return (
     <div className="container">
       <section className="py-5 bg-light">

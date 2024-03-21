@@ -40,8 +40,6 @@ function Checkout(props) {
 
         const response = await CartAPI.getCarts(query);
 
-        // console.log(response);
-
         setCarts(response);
 
         getTotal(response);
@@ -137,7 +135,6 @@ function Checkout(props) {
 
     const res = await CheckoutAPI.postEmail(query);
     if (res.status) {
-      console.log("res:", res);
       setLoad(false);
       window.alert("Lỗi khi đặt hàng");
       return;

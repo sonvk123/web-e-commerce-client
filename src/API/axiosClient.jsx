@@ -17,15 +17,12 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  // console.log("config:", config);
-
   return config;
 });
 
 axiosClient.interceptors.response.use(
   (response) => {
     // Xử lý response thành công
-    // console.log("response:", response);
     return response.data;
   },
 
