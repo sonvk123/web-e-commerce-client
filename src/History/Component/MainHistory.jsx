@@ -4,7 +4,6 @@ import HistoryAPI from "../../API/HistoryAPI";
 import queryString from "query-string";
 import Pagination from "./Pagination";
 
-
 MainHistory.propTypes = {};
 
 function MainHistory(props) {
@@ -72,39 +71,27 @@ function MainHistory(props) {
           <thead className="bg-light">
             <tr className="text-center">
               <th className="border-0" scope="col">
-                {" "}
-                <strong className="text-small text-uppercase">ID Order</strong>
-              </th>
-              <th className="border-0" scope="col">
-                {" "}
-                <strong className="text-small text-uppercase">ID User</strong>
-              </th>
-              <th className="border-0" scope="col">
-                {" "}
                 <strong className="text-small text-uppercase">Name</strong>
               </th>
               <th className="border-0" scope="col">
-                {" "}
                 <strong className="text-small text-uppercase">Phone</strong>
               </th>
               <th className="border-0" scope="col">
-                {" "}
                 <strong className="text-small text-uppercase">Address</strong>
               </th>
               <th className="border-0" scope="col">
-                {" "}
                 <strong className="text-small text-uppercase">Total</strong>
               </th>
               <th className="border-0" scope="col">
-                {" "}
                 <strong className="text-small text-uppercase">Delivery</strong>
               </th>
               <th className="border-0" scope="col">
-                {" "}
                 <strong className="text-small text-uppercase">Status</strong>
               </th>
               <th className="border-0" scope="col">
-                {" "}
+                <strong className="text-small text-uppercase">TIME</strong>
+              </th>
+              <th className="border-0" scope="col">
                 <strong className="text-small text-uppercase">Detail</strong>
               </th>
             </tr>
@@ -113,12 +100,6 @@ function MainHistory(props) {
             {listCart &&
               listCart.map((value) => (
                 <tr className="text-center" key={value._id}>
-                  <td className="align-middle border-0">
-                    <p className="mb-0 small">{value._id}</p>
-                  </td>
-                  <td className="align-middle border-0">
-                    <p className="mb-0 small">{value.idUser}</p>
-                  </td>
                   <td className="align-middle border-0">
                     <p className="mb-0 small">{value.fullname}</p>
                   </td>
@@ -144,6 +125,9 @@ function MainHistory(props) {
                     </p>
                   </td>
                   <td className="align-middle border-0">
+                    <p className="mb-0 small">{value.time}</p>
+                  </td>
+                  <td className="align-middle border-0">
                     <Link
                       className="btn btn-outline-dark btn-sm"
                       to={`/history/${value._id}`}
@@ -157,10 +141,10 @@ function MainHistory(props) {
           </tbody>
         </table>
         <Pagination
-                    pagination={pagination}
-                    handlerChangePage={handlerChangePage}
-                    totalPage={totalPage}
-                  />
+          pagination={pagination}
+          handlerChangePage={handlerChangePage}
+          totalPage={totalPage}
+        />
       </div>
     </div>
   );
